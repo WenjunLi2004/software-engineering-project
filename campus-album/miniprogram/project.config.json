@@ -1,0 +1,20 @@
+{
+  "description": "校园影集微信小程序（第一周联调版本）",
+  "packOptions": {
+    "ignore": []
+  },
+  "miniprogramRoot": "./",
+  "compileType": "miniprogram",
+  "projectname": "campus-album",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": false,
+    "newFeature": true
+  },
+  "appid": "touristappid",
+  "libVersion": "3.0.0",
+  "condition": {}
+}

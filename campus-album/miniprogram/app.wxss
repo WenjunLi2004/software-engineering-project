@@ -1,0 +1,95 @@
+page {
+  --color-primary: #156082;
+  --color-primary-dark: #0e2841;
+  --color-primary-light: #eef4f8;
+  --color-accent: #e97132;
+  --color-bg: #f5f7fa;
+  --color-surface: #ffffff;
+  --color-border: #e2e8f0;
+  --color-text: #1f2937;
+  --color-text-muted: #64748b;
+  --color-error-bg: #fff1f0;
+  --color-error-border: #ffccc7;
+  --color-error-text: #cf1322;
+
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  font-size: 28rpx;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+view,
+text,
+input,
+textarea,
+button {
+  box-sizing: border-box;
+}
+
+.container {
+  min-height: 100vh;
+  padding: 28rpx;
+  background-color: var(--color-bg);
+}
+
+.card {
+  background-color: var(--color-surface);
+  border: 1rpx solid var(--color-border);
+  border-radius: 16rpx;
+  padding: 28rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(14, 40, 65, 0.06);
+}
+
+.btn-primary {
+  display: block;
+  width: 100%;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 12rpx;
+  padding: 22rpx 32rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+.btn-primary[disabled] {
+  opacity: 0.6;
+}
+
+.btn-secondary {
+  display: block;
+  width: 100%;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  border: 1rpx solid #c8dce8;
+  border-radius: 12rpx;
+  padding: 20rpx 30rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.btn-secondary::after {
+  border: none;
+}
+
+.error-banner {
+  background-color: var(--color-error-bg);
+  border: 1rpx solid var(--color-error-border);
+  color: var(--color-error-text);
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+  margin-bottom: 24rpx;
+  font-size: 26rpx;
+  line-height: 1.5;
+}
