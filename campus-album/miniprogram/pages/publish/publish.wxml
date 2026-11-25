@@ -1,0 +1,68 @@
+<view class="publish-page">
+  <view class="status-bar" wx:if="{{!needLogin && currentUser}}">
+    <view class="author-badge">
+      <text class="author-dot"></text>
+      <text class="author-text">当前作者：{{currentUser.username}}</text>
+    </view>
+    <text class="phase-tag">第一周 · 文字作品</text>
+  </view>
+
+  <view class="auth-notice" wx:if="{{needLogin}}">
+    <view class="auth-notice-text">当前未登录，登录后即可发布校园作品</view>
+    <button class="auth-notice-btn" size="mini" bindtap="onGoToLogin">去登录</button>
+  </view>
+
+  <view class="editor-card">
+    <view class="editor-header">
+      <text class="editor-title">发布文字作品</text>
+      <text class="editor-subtitle">记录今天的校园生活与活动见闻</text>
+    </view>
+
+    <view class="error-box" wx:if="{{errorMessage}}">
+      <text class="error-text">{{errorMessage}}</text>
+      <text class="error-link" wx:if="{{needLogin}}" bindtap="onGoToLogin">前往登录</text>
+    </view>
+
+    <view class="textarea-box">
+      <textarea
+        class="post-textarea"
+        value="{{text}}"
+        maxlength="{{maxLength}}"
+        placeholder="写下你的校园故事，例如：今天在校运会上认识了新朋友。"
+        placeholder-class="textarea-placeholder"
+        show-confirm-bar="{{false}}"
+        disabled="{{submitting}}"
+        bindinput="onTextInput"
+      />
+      <view class="textarea-footer">
+        <text class="trim-tip">发布时会自动去除首尾空白</text>
+        <text class="char-counter {{charCount >= maxLength ? 'char-counter-limit' : ''}}">
+          {{charCount}} / {{maxLength}}
+        </text>
+      </view>
+    </view>
+
+    <view class="roadmap-note">
+      <text class="roadmap-badge">第二周预告</text>
+      <text class="roadmap-text">图片/视频上传与校园活动标签将在第二周上线，当前版本先支持纯文字作品发布。</text>
+    </view>
+  </view>
+
+  <view class="action-group">
+    <button
+      class="publish-btn"
+      loading="{{submitting}}"
+      disabled="{{submitting}}"
+      bindtap="onSubmit"
+    >
+      {{submitting ? '正在发布...' : '发布作品'}}
+    </button>
+    <button
+      class="cancel-btn"
+      disabled="{{submitting}}"
+      bindtap="onCancel"
+    >
+      取消返回
+    </button>
+  </view>
+</view>
