@@ -1,0 +1,114 @@
+<view class="feed-page">
+  <!-- 顶部校园状态与账号卡片 -->
+  <view class="header-card">
+    <view class="brand-row">
+      <view class="brand-info">
+        <text class="brand-title">校园影集</text>
+        <text class="brand-subtitle">记录校园活动与日常瞬间 · 第一周文字流</text>
+      </view>
+      <view class="count-pill">{{posts.length}} 条作品</view>
+    </view>
+
+    <view class="user-bar" wx:if="{{isLoggedIn}}">
+      <view class="user-identity">
+        <view class="avatar avatar-self">{{currentUserInitial}}</view>
+        <view class="user-meta">
+          <view class="user-name-line">
+            <text class="user-name">{{currentUser.username}}</text>
+            <text class="status-badge">已登录</text>
+          </view>
+          <text class="user-hint">欢迎回到校园影集，分享今天的校园故事</text>
+        </view>
+      </view>
+      <view class="header-actions">
+        <button class="action-btn action-btn-primary" bindtap="handleGoPublish">发文字作品</button>
+        <button class="action-btn action-btn-secondary" bindtap="handleLogout">退出/切换账号</button>
+      </view>
+    </view>
+
+    <view class="guest-bar" wx:else>
+      <view class="guest-info">
+        <text class="guest-title">当前为游客浏览模式</text>
+        <text class="guest-desc">可直接浏览校园作品，登录后即可发布你的文字记录</text>
+      </view>
+      <button class="action-btn action-btn-primary guest-login-btn" bindtap="handleGoLogin">去登录</button>
+    </view>
+  </view>
+
+  <!-- 列表工具栏 -->
+  <view class="toolbar-row">
+    <view class="toolbar-left">
+      <text class="section-title">最新校园动态</text>
+      <text class="update-hint" wx:if="{{loading}}">正在同步...</text>
+      <text class="update-hint" wx:elif="{{lastUpdatedText}}">更新于 {{lastUpdatedText}}</text>
+      <text class="update-hint" wx:else>下拉可刷新</text>
+    </view>
+    <button
+      class="refresh-btn"
+      size="mini"
+      loading="{{loading}}"
+      disabled="{{loading}}"
+      bindtap="handleRefresh"
+    >刷新列表</button>
+  </view>
+
+  <!-- 请求失败错误提示 -->
+  <view class="error-card" wx:if="{{errorMessage}}">
+    <view class="error-content">
+      <text class="error-title">加载作品失败</text>
+      <text class="error-text">{{errorMessage}}</text>
+    </view>
+    <button class="retry-btn" size="mini" bindtap="handleRefresh">重试</button>
+  </view>
+
+  <!-- 首次加载占位 -->
+  <view class="state-card" wx:if="{{loading && !hasLoaded}}">
+    <text class="state-title">正在加载校园作品...</text>
+    <text class="state-desc">请稍候，正在连接校园影集服务</text>
+  </view>
+
+  <!-- 空列表提示 -->
+  <view class="state-card empty-card" wx:elif="{{!loading && !errorMessage && posts.length === 0}}">
+    <view class="empty-icon">影</view>
+    <text class="state-title">还没有校园作品，登录后发布第一条吧</text>
+    <text class="state-desc">新发布的校园文字作品会按时间倒序出现在这里</text>
+    <button
+      wx:if="{{isLoggedIn}}"
+      class="action-btn action-btn-primary empty-cta"
+      bindtap="handleGoPublish"
+    >发文字作品</button>
+    <button
+      wx:else
+      class="action-btn action-btn-primary empty-cta"
+      bindtap="handleGoLogin"
+    >去登录</button>
+  </view>
+
+  <!-- 作品流列表 -->
+  <view class="post-list" wx:elif="{{posts.length > 0}}">
+    <view class="post-card" wx:for="{{posts}}" wx:key="id">
+      <view class="post-header">
+        <view class="post-author-wrap">
+          <view class="avatar avatar-post">{{item.authorInitial}}</view>
+          <view class="post-author-meta">
+            <text class="post-author-name">{{item.author.username}}</text>
+            <text class="post-time">{{item.displayTime}}</text>
+          </view>
+        </view>
+        <text class="post-id-tag">#{{item.id}}</text>
+      </view>
+
+      <view class="post-body">
+        <text class="post-text" user-select="true">{{item.text}}</text>
+      </view>
+
+      <view class="post-footer">
+        <text class="post-type-tag">文字作品</text>
+      </view>
+    </view>
+
+    <view class="list-end-tip">
+      <text>已展示全部 {{posts.length}} 条可见作品 · 下拉或点“刷新列表”重新加载</text>
+    </view>
+  </view>
+</view>
