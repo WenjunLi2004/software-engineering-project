@@ -1,0 +1,90 @@
+<view class="login-page">
+  <view class="hero">
+    <view class="hero-badge">SZU 校园影集</view>
+    <text class="hero-title">{{mode === 'register' ? '创建校园账号' : '欢迎回到校园影集'}}</text>
+    <text class="hero-subtitle">登录后即可发布校园文字作品，并与同学们实时同步</text>
+  </view>
+
+  <view wx:if="{{currentUser}}" class="session-banner">
+    <view class="session-info">
+      <text class="session-label">当前已登录</text>
+      <text class="session-username">{{currentUser.username}}</text>
+    </view>
+    <view class="session-actions">
+      <text class="session-link" bindtap="onContinueAsGuest">返回首页</text>
+      <text class="session-divider">|</text>
+      <text class="session-link session-logout" bindtap="onLogout">退出账号</text>
+    </view>
+  </view>
+
+  <view class="auth-card">
+    <view class="mode-tabs">
+      <view
+        class="mode-tab {{mode === 'login' ? 'mode-tab-active' : ''}}"
+        data-mode="login"
+        bindtap="onSwitchMode"
+      >
+        登录
+      </view>
+      <view
+        class="mode-tab {{mode === 'register' ? 'mode-tab-active' : ''}}"
+        data-mode="register"
+        bindtap="onSwitchMode"
+      >
+        注册
+      </view>
+    </view>
+
+    <view wx:if="{{errorMessage}}" class="error-banner" role="alert">
+      <text class="error-text">{{errorMessage}}</text>
+    </view>
+
+    <view class="form-group">
+      <text class="field-label">用户名</text>
+      <input
+        class="field-input"
+        type="text"
+        value="{{username}}"
+        placeholder="请输入用户名"
+        placeholder-class="field-placeholder"
+        maxlength="64"
+        confirm-type="next"
+        bindinput="onUsernameInput"
+      />
+    </view>
+
+    <view class="form-group">
+      <text class="field-label">密码</text>
+      <input
+        class="field-input"
+        password="{{true}}"
+        value="{{password}}"
+        placeholder="{{mode === 'register' ? '请设置登录密码' : '请输入密码'}}"
+        placeholder-class="field-placeholder"
+        maxlength="128"
+        confirm-type="done"
+        bindinput="onPasswordInput"
+        bindconfirm="onSubmit"
+      />
+    </view>
+
+    <button
+      class="submit-btn"
+      loading="{{submitting}}"
+      disabled="{{submitting}}"
+      bindtap="onSubmit"
+    >
+      {{mode === 'register' ? (submitting ? '注册中...' : '注册并登录') : (submitting ? '登录中...' : '登录')}}
+    </button>
+
+    <view class="switch-hint" bindtap="onToggleMode">
+      <text class="switch-hint-text">{{mode === 'register' ? '已有账号？' : '还没有账号？'}}</text>
+      <text class="switch-hint-link">{{mode === 'register' ? '去登录' : '立即注册'}}</text>
+    </view>
+  </view>
+
+  <view class="guest-section">
+    <button class="guest-btn" bindtap="onContinueAsGuest">以游客身份返回首页</button>
+    <text class="guest-tip">游客可直接浏览校园作品流，发布作品需登录账号</text>
+  </view>
+</view>
